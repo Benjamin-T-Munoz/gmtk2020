@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
 
 
     public bool activeThreat=false;
+    bool isTargeted = false;
 
     private BoxCollider boxCollider;         //The BoxCollider2D component attached to this object.
     private Rigidbody rb;                //The Rigidbody2D component attached to this object.
@@ -28,8 +29,18 @@ public class Enemy : MonoBehaviour
     }
 
 
-   
 
+    private void Update()
+    {
+        if(isTargeted)
+        {
+            this.GetComponent<SpriteRenderer>().color = Color.red;
+        }
+        else
+        {
+            this.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+    }
 
 
     public void Move()
@@ -43,7 +54,10 @@ public class Enemy : MonoBehaviour
 
     }
     
-
+    public void Targeted(bool active)
+    {
+        isTargeted = active;
+    }
 
 
 
