@@ -7,6 +7,9 @@ using UnityEngine.Events;
 public class GameManager : MonoBehaviour
 {
     public static GameManager manager;
+    public BoardManager boardManager;
+    public WallManager wallManager ;
+
     public event Action stepForward;
     float time;
     [SerializeField]
@@ -35,6 +38,17 @@ public class GameManager : MonoBehaviour
             stepForward.Invoke();
         }
     }
+
+
+
+    public void StepForward()
+    {
+
+        wallManager.StepForward();
+       
+
+    }
+
 
     public float getIntervals()
     {

@@ -10,12 +10,8 @@ public class WallManager : MonoBehaviour
     float unitsToMove;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        GameManager.manager.stepForward += MoveForward;
-    }
 
-    void MoveForward()
+    public void StepForward()
     {
         Vector3 movement = new Vector3(0,0,-unitsToMove);
         this.transform.position += movement;

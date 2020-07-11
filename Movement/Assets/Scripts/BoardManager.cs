@@ -225,6 +225,42 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+
+    public bool BangAction(GameObject[] targets, GameObject[] bullets)
+    {
+
+       
+        for(int i=0;i<targets.Length ; i++)
+        {
+
+
+
+            var hitposition = targets[i].GetComponent<Enemy>().currentPosition;
+
+            
+
+            switch(bullets[i])
+            {
+
+            }
+
+        }
+        
+
+        if( activeThreats.Count>0)
+        {
+
+        }
+
+         
+
+
+
+
+        return true;
+    }
+
+
     #region Checking Location
 
     // Checks to see if their is another enemy directly infroint of the point
@@ -232,7 +268,7 @@ public class BoardManager : MonoBehaviour
     {
         int layerMask = 1 << 9;
         RaycastHit raycastHit ;
-        Debug.DrawLine(position, target,Color.red);
+       
         if (Physics.Linecast(position, target, out raycastHit,layerMask) )
         {
             Debug.DrawLine(position, target);
@@ -250,21 +286,13 @@ public class BoardManager : MonoBehaviour
 
 
 
+
+
+
     #endregion
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
     Vector3 RandomPosition()
     {
