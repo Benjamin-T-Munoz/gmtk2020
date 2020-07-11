@@ -3609,6 +3609,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1431353717}
   - component: {fileID: 1431353718}
+  - component: {fileID: 1431353719}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3624,7 +3625,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1431353716}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3082169, y: -5.446127, z: 21.464106}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3643,6 +3644,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intervals: 1
+--- !u!114 &1431353719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431353716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a52415bc87f634080c9e1f7670d480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxNumberOfEnemies: 10
+  MinimumNumberOfEnemies: 6
+  ThreatCount: 6
+  columns: 18
+  rows: 20
+  LOSSpacing: 1
+  enemiesOnBoard: []
+  activeThreats: []
+  boardholder: {fileID: 0}
+  enemyholder: {fileID: 0}
+  floortiles:
+  - {fileID: 7427594283509994094, guid: 1dcfebfe22259b54aa58d958f36cadf6, type: 3}
+  - {fileID: 892577971927222048, guid: 51c24815a7dfceb4db6adfd5f2a95e92, type: 3}
+  - {fileID: 4418344968736334820, guid: 99b74d87f9fb7e64281b43711065c2e3, type: 3}
+  - {fileID: 7030789147125906597, guid: 26c5f1dc5da47354fa070c720338e13d, type: 3}
+  - {fileID: 219303795510141817, guid: 966cbb752c5ced941a5ad8ac7f7395be, type: 3}
+  - {fileID: 3351079719747847849, guid: c1fbb869cdcc8994c9618c113feec72e, type: 3}
+  - {fileID: 6988841328010431494, guid: 694f77a9631e06746ad5b0903cdaf672, type: 3}
+  - {fileID: 8888078313498111826, guid: 10fd2f71f67c30c4b90e630c28999f91, type: 3}
+  enemies:
+  - {fileID: 5377012089230302596, guid: de381101951acbe49892d4c09d44a0e1, type: 3}
+  - {fileID: 1570693266253525597, guid: e539d336881cd2740b40bee0889be579, type: 3}
 --- !u!1001 &1474217175
 PrefabInstance:
   m_ObjectHideFlags: 0
