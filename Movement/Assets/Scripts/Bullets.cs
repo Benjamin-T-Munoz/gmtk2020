@@ -3,21 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BulletType
+{
+    Fire,
+    Explosive,
+    Hollow,
+    Rickochet,
+    Piercing,
+    Homing
+}
+
 public class Bullets : MonoBehaviour
 {
 
-    enum BulletType
-    {
-        Fire,
-        Explosive,
-        Hollow,
-        Rickochet,
-        Piercing,
-        Homing
-    }
-
     BulletType[] chamber = new BulletType[6];
-    BulletType[] bulletsShot = new BulletType[6];
+    BulletType[] bulletsToShoot = new BulletType[6];
+    int bulletsShot;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,20 @@ public class Bullets : MonoBehaviour
             int randBulletType = UnityEngine.Random.Range(0, Enum.GetNames(typeof(BulletType)).Length);
             chamber[count] = (BulletType)randBulletType;
         }
+        bulletsShot = chamber.Length;
+    }
 
+    public void ShootEnemy()
+    {
+        if(bulletsShot<chamber.Length)
+        {
+            bulletsToShoot[bulletsShot] = chamber[bulletsShot];
+            bulletsShot++;
+        }
+    }
+
+    public BulletType[] getBulletsToShoot()
+    {
+        return bulletsToShoot;
     }
 }
