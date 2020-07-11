@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         else
         {
             time = intervals;
-            stepForward.Invoke();
+            
         }
     }
 
@@ -45,7 +45,8 @@ public class GameManager : MonoBehaviour
     {
 
         wallManager.StepForward();
-       
+
+
 
     }
 
