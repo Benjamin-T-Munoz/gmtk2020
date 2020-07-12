@@ -131,7 +131,7 @@ public class BoardManager : MonoBehaviour
         instance.transform.SetParent(enemyholder);
         occupideGridPositions.Add(gridPosition);
         enemiesOnBoard.Add(instance);
-        Debug.Log(instance.name);
+        //Debug.Log(instance.name);
 
     }
 
@@ -146,7 +146,7 @@ public class BoardManager : MonoBehaviour
         instance.transform.SetParent(enemyholder);
         occupideGridPositions.Add(location);
         enemiesOnBoard.Add(instance);
-        Debug.Log(instance.name);
+        //Debug.Log(instance.name);
         return instance;
 
     }
@@ -164,7 +164,7 @@ public class BoardManager : MonoBehaviour
 
             bool free = CheckLOS(currentposition, losFree);
 
-            Debug.Log(enemiesOnBoard[i].name.ToString()+free);
+            //Debug.Log(enemiesOnBoard[i].name.ToString()+free);
 
             if (free)
             {
@@ -176,7 +176,7 @@ public class BoardManager : MonoBehaviour
             }
             else
             {
-                Debug.Log(enemiesOnBoard[i].name.ToString());
+                //Debug.Log(enemiesOnBoard[i].name.ToString());
             }
         }
 
@@ -255,97 +255,108 @@ public class BoardManager : MonoBehaviour
     public bool BangAction(List<GameObject> targets, BulletType [] bullets)
     {
 
-       
-        for(int i=0;i<targets.Count ; i++)
+       if(targets != null && bullets != null)
         {
-
-            var hitposition = targets[i].GetComponent<Enemy>().currentPosition;
-
-            switch(bullets[i])
+            for (int i = 0; i < targets.Count; i++)
             {
-            
-                case BulletType.Fire:
 
-                    ThreatKilled(targets[i]);
-                    SetFire(hitposition);
+                var hitposition = targets[i].GetComponent<Enemy>().currentPosition;
+                Debug.Log("Shooting: " + bullets[i].ToString() + " at position " + targets[i].transform.position);
+                switch (bullets[i])
+                {
 
-                    break;
-                case BulletType.Explosive:
+                    case BulletType.Fire:
 
-                    // Kills in a cube
+                        ThreatKilled(targets[i]);
+                        SetFire(hitposition);
+                        Debug.Log("Fire bullet was shot!");
 
-                    Vector3[] explosionPoints = new Vector3[9];
+                        break;
+                    case BulletType.Explosive:
 
+                        // Kills in a cube
 
-                    explosionPoints[0] = new Vector3(hitposition.x-1, 0.0f, hitposition.z+1);//top left corner
-                    explosionPoints[1] = new Vector3(hitposition.x, 0.0f, hitposition.z + 1);//top center corner
-                    explosionPoints[2] = new Vector3(hitposition.x + 1, 0.0f, hitposition.z +1);//top right corner
-
-                    explosionPoints[3] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z);//center left 
-
-                    explosionPoints[4] = new Vector3(hitposition.x, 0.0f, hitposition.z);//center
-
-                    explosionPoints[5] = new Vector3(hitposition.x +1 , 0.0f, hitposition.z);//center right 
-                   
-                    explosionPoints[6] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z - 1);//bottom left corner
-                    explosionPoints[7] = new Vector3(hitposition.x, 0.0f, hitposition.z - 1);//bottom center corner
-                    explosionPoints[8] = new Vector3(hitposition.x + 1, 0.0f, hitposition.z - 1);//bottom right corner
+                        Vector3[] explosionPoints = new Vector3[9];
 
 
+                        explosionPoints[0] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z + 1);//top left corner
+                        explosionPoints[1] = new Vector3(hitposition.x, 0.0f, hitposition.z + 1);//top center corner
+                        explosionPoints[2] = new Vector3(hitposition.x + 1, 0.0f, hitposition.z + 1);//top right corner
+
+                        explosionPoints[3] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z);//center left 
+
+                        explosionPoints[4] = new Vector3(hitposition.x, 0.0f, hitposition.z);//center
+
+                        explosionPoints[5] = new Vector3(hitposition.x + 1, 0.0f, hitposition.z);//center right 
+
+                        explosionPoints[6] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z - 1);//bottom left corner
+                        explosionPoints[7] = new Vector3(hitposition.x, 0.0f, hitposition.z - 1);//bottom center corner
+                        explosionPoints[8] = new Vector3(hitposition.x + 1, 0.0f, hitposition.z - 1);//bottom right corner
 
 
-                    for(int j=0;j<enemiesOnBoard.Count;j++)
-                    {
-                            for (int k=0;k<8;k++)
+
+                        
+                        for (int k = 0; k < 8; k++)
+                        {
+                            for (int j = 0; j < enemiesOnBoard.Count; j++)
                             {
-                              if(enemiesOnBoard[j].GetComponent<Enemy>().currentPosition==explosionPoints[k])
-                              {
-                                if(enemiesOnBoard[j].GetComponent<Enemy>().activeThreat)
+                                /*Debug.Log("Enemy count " + enemiesOnBoard.Count);
+                                Debug.Log(j);
+                                Debug.Log("Enemies on board: " + enemiesOnBoard[j]);*/
+                                
+                                if(j < enemiesOnBoard.Count)
                                 {
-                                    if(targets.Contains(enemiesOnBoard[j]))
+                                    if (enemiesOnBoard[j].GetComponent<Enemy>().currentPosition == explosionPoints[k])
                                     {
-                                        targets.Remove(enemiesOnBoard[j]);
+                                        if (enemiesOnBoard[j].GetComponent<Enemy>().activeThreat)
+                                        {
+                                            if (targets.Contains(enemiesOnBoard[j]))
+                                            {
+                                                targets.Remove(enemiesOnBoard[j]);
+                                            }
+
+                                            ThreatKilled(enemiesOnBoard[j]);
+                                        }
+                                        else
+                                        {
+                                            EnemyKilled(enemiesOnBoard[j]);
+                                        }
+
                                     }
-
-                                    ThreatKilled(enemiesOnBoard[j]);
                                 }
-                                else
-                                {
-                                    EnemyKilled(enemiesOnBoard[j]);
-                                }
-
-                              }
+                                
                             }
-                    }
-                    break;
+                        }
+                        
+                        
+                        break;
 
-                case BulletType.Hollow:
-                    ThreatKilled(targets[i]);
+                    case BulletType.Hollow:
+                        ThreatKilled(targets[i]);
+                        Debug.Log("Hollow bullet was shot!");
+                        break;
 
-                    break;
+                    case BulletType.Ricochet:
+                        Debug.Log("Ricochet bullet was shot at: " + targets[i].gameObject.transform.position);
+                        Vector3[] ricochetPoints = new Vector3[8];
 
-                case BulletType.Rickochet:
+                        ThreatKilled(targets[i]);
 
-                    Vector3[] ricochetPoints = new Vector3[8];
+                        ricochetPoints[0] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z + 1);//top left corner
+                        ricochetPoints[1] = new Vector3(hitposition.x, 0.0f, hitposition.z + 1);//top center corner
+                        ricochetPoints[2] = new Vector3(hitposition.x + 1, 0.0f, hitposition.z + 1);//top right corner
 
-                    ThreatKilled(targets[i]);
+                        ricochetPoints[3] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z);//center left 
 
-                    ricochetPoints[0] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z + 1);//top left corner
-                    ricochetPoints[1] = new Vector3(hitposition.x, 0.0f, hitposition.z + 1);//top center corner
-                    ricochetPoints[2] = new Vector3(hitposition.x + 1, 0.0f, hitposition.z + 1);//top right corner
+                        ricochetPoints[4] = new Vector3(hitposition.x + 1, 0.0f, hitposition.z);//center right 
 
-                    ricochetPoints[3] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z);//center left 
-                   
-                    ricochetPoints[5] = new Vector3(hitposition.x + 1, 0.0f, hitposition.z);//center right 
-                   
-                    ricochetPoints[6] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z - 1);//bottom left corner
-                    ricochetPoints[7] = new Vector3(hitposition.x, 0.0f, hitposition.z - 1);//bottom center corner
-                    ricochetPoints[8] = new Vector3(hitposition.x + 1, 0.0f, hitposition.z - 1);//bottom right corner
+                        ricochetPoints[5] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z - 1);//bottom left corner
+                        ricochetPoints[6] = new Vector3(hitposition.x, 0.0f, hitposition.z - 1);//bottom center corner
+                        ricochetPoints[7] = new Vector3(hitposition.x + 1, 0.0f, hitposition.z - 1);//bottom right corner
+                        var randomIndex = Random.Range(0, ricochetPoints.Length);
 
-                    var randomIndex = Random.Range(0, ricochetPoints.Length);
-
-                    for (int j = 0; j < enemiesOnBoard.Count; j++)
-                    {
+                        for (int j = 0; j < enemiesOnBoard.Count; j++)
+                        {
                             if (enemiesOnBoard[j].GetComponent<Enemy>().currentPosition == ricochetPoints[randomIndex])
                             {
                                 if (enemiesOnBoard[j].GetComponent<Enemy>().activeThreat)
@@ -363,44 +374,44 @@ public class BoardManager : MonoBehaviour
                                 }
 
                             }
-                    }
-
-                    break;
-
-                case BulletType.Homing:
-
-                    int indexOfClosest=0;
-
-                    for (int j = 0; j < enemiesOnBoard.Count; j++)
-                    {
-                        if (Vector3.Distance(enemiesOnBoard[j].GetComponent<Enemy>().currentPosition,homingpoint)< Vector3.Distance(enemiesOnBoard[indexOfClosest].GetComponent<Enemy>().currentPosition, homingpoint))
-                        {
-                            indexOfClosest = j;
                         }
-                    }
+                        
+                        break;
 
-                    if(enemiesOnBoard[indexOfClosest].GetComponent<Enemy>().activeThreat)
-                    {
-                        ThreatKilled(enemiesOnBoard[indexOfClosest]);
-                    }
-                    else
-                    {
-                        EnemyKilled(enemiesOnBoard[indexOfClosest]);
-                    }
+                    case BulletType.Homing:
 
-                    break;
+                        int indexOfClosest = 0;
 
-                case BulletType.Sheild:
+                        for (int j = 0; j < enemiesOnBoard.Count; j++)
+                        {
+                            if (Vector3.Distance(enemiesOnBoard[j].GetComponent<Enemy>().currentPosition, homingpoint) < Vector3.Distance(enemiesOnBoard[indexOfClosest].GetComponent<Enemy>().currentPosition, homingpoint))
+                            {
+                                indexOfClosest = j;
+                            }
+                        }
 
-                    EnemyPacify(targets[i]);
+                        if (enemiesOnBoard[indexOfClosest].GetComponent<Enemy>().activeThreat)
+                        {
+                            ThreatKilled(enemiesOnBoard[indexOfClosest]);
+                        }
+                        else
+                        {
+                            EnemyKilled(enemiesOnBoard[indexOfClosest]);
+                        }
+                        Debug.Log("Homing bullet was shot!");
+                        break;
 
-                    break;
+                    case BulletType.Shield:
+
+                        EnemyPacify(targets[i]);
+                        Debug.Log("Shield bullet was shot!");
+                        break;
+
+                }
 
             }
-
+            Debug.Break();
         }
-        
-
         if(activeThreats.Count>0)
         {
             return false;
@@ -442,6 +453,7 @@ public class BoardManager : MonoBehaviour
     {
         Bullets gun = GameManager.manager.playerGun;
         BangAction(gun.GetSelectedEnemies(), gun.GetBulletsToShoot());
+        gun.Reset();
         UpdateSpawnRows();
         SpawnEnemies();
         ChooseActiveThreat();
@@ -488,8 +500,8 @@ public class BoardManager : MonoBehaviour
        
         if (Physics.Linecast(position, target, out raycastHit,layerMask) )
         {
-            Debug.DrawLine(position, target);
-            Debug.Log(raycastHit.ToString());
+            //Debug.DrawLine(position, target);
+            //Debug.Log(raycastHit.ToString());
             return false;// LOS blocked cant be the shooter
         }
         else

@@ -32,7 +32,6 @@ public class Player : MonoBehaviour
                 //Debug.Log("Target Acquired!");
                 if (Input.GetMouseButtonDown(0) && !hit.transform.GetComponent<Enemy>().selected)
                 {
-                    Debug.Log("BANG BANG MUTHAFUKA");
                     playerGun.Shoot(hit.transform.gameObject);
                     hit.transform.GetComponent<Enemy>().selected = true;
                 }

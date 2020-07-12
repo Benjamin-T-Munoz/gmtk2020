@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour
 
     internal void Kill()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     public void Targeted(bool isTargeted)

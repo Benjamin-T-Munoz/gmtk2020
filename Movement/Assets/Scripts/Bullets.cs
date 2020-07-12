@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,36 +10,47 @@ using UnityEngine;
         Fire,
         Explosive,
         Hollow,
-        Rickochet,
+        Ricochet,
         Piercing,
         Homing,
-        Sheild
+        Shield
     }
 public class Bullets : MonoBehaviour
 {
 
     BulletType[] chamber = new BulletType[6];
     BulletType[] bulletsToShoot = new BulletType[6];
+    List<BulletType> allBullets = new List<BulletType>();
     List<GameObject> enemiesToShoot = new List<GameObject>();
     int bulletsShot=0;
 
+    private void Start()
+    {
+        Reset();
+    }
+
     void ReloadChamber()
     {
-
-        Array.Clear(chamber, 0, chamber.Length);//clears the array
-        for(int count = 0; count <chamber.Length; count++)
+        allBullets.Clear();
+        for (int count = 0; count < Enum.GetNames(typeof(BulletType)).Length; count++)
         {
-            int randBulletType = UnityEngine.Random.Range(0, Enum.GetNames(typeof(BulletType)).Length);
-            chamber[count] = (BulletType)randBulletType;
+            allBullets.Add((BulletType)count);
         }
-
+        for(int count = 0; count<chamber.Length; count++)
+        {
+            int randomBulletType = UnityEngine.Random.Range(0,allBullets.Count);
+            chamber[count] = allBullets[randomBulletType];
+            allBullets.RemoveAt(randomBulletType);
+        }
     }
 
     public void Shoot(GameObject enemyShot)
     {
-        if(bulletsShot < chamber.Length)
+        if (bulletsShot < chamber.Length)
         {
-            bulletsToShoot[bulletsShot] = chamber[bulletsShot++];
+            Debug.Log("BANG BANG MUTHAFUKA");
+            bulletsToShoot[bulletsShot] = chamber[bulletsShot];
+            bulletsShot++;
             enemiesToShoot.Add(enemyShot);
         }
         
@@ -51,5 +63,18 @@ public class Bullets : MonoBehaviour
     public List<GameObject> GetSelectedEnemies()
     {
         return enemiesToShoot;
+    }
+
+    public int getBulletsShot()
+    {
+        return bulletsShot;
+    }
+
+    public void Reset()
+    {
+        bulletsShot = 0;
+        ReloadChamber();
+        enemiesToShoot.Clear();
+        Array.Clear(bulletsToShoot,0,bulletsToShoot.Length);
     }
 }
