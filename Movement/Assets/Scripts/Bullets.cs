@@ -17,11 +17,9 @@ using UnityEngine;
 public class Bullets : MonoBehaviour
 {
 
-
-
     BulletType[] chamber = new BulletType[6];
     BulletType[] bulletsToShoot = new BulletType[6];
-    GameObject[] enemiesToShoot = new GameObject[6];
+    List<GameObject> enemiesToShoot = new List<GameObject>();
     int bulletsShot=0;
 
     void ReloadChamber()
@@ -40,8 +38,8 @@ public class Bullets : MonoBehaviour
     {
         if(bulletsShot < chamber.Length)
         {
-            bulletsToShoot[bulletsShot] = chamber[bulletsShot];
-            enemiesToShoot[bulletsShot++] = enemyShot;
+            bulletsToShoot[bulletsShot] = chamber[bulletsShot++];
+            enemiesToShoot.Add(enemyShot);
         }
         
     }
@@ -50,7 +48,7 @@ public class Bullets : MonoBehaviour
     {
         return bulletsToShoot;
     }
-    public GameObject[] GetSelectedEnemies()
+    public List<GameObject> GetSelectedEnemies()
     {
         return enemiesToShoot;
     }

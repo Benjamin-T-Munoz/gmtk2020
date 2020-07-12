@@ -8,7 +8,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager manager;
     public BoardManager boardManager;
-    public WallManager wallManager ;
+    public WallManager wallManager;
+
+    public Player player;
+    public Bullets playerGun;
 
     public event Action stepForward;
     float time;
@@ -35,7 +38,7 @@ public class GameManager : MonoBehaviour
         else
         {
             time = intervals;
-            
+            StepForward();
         }
     }
 
@@ -45,8 +48,7 @@ public class GameManager : MonoBehaviour
     {
 
         wallManager.StepForward();
-
-
+        boardManager.StepForward();
 
     }
 

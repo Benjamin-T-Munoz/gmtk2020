@@ -438,6 +438,8 @@ public class BoardManager : MonoBehaviour
 
     public void StepForward()
     {
+        Bullets gun = GameManager.manager.playerGun;
+        BangAction(gun.GetSelectedEnemies(), gun.GetBulletsToShoot());
         UpdateSpawnRows();
         SpawnEnemies();
         ChooseActiveThreat();
