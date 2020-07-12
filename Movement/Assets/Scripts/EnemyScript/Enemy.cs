@@ -11,12 +11,14 @@ public class Enemy : MonoBehaviour
 
 
     public bool activeThreat=false;
+    bool targeted = false;
+    public bool selected = false;
 
     private BoxCollider boxCollider;         //The BoxCollider2D component attached to this object.
     private Rigidbody rb;                //The Rigidbody2D component attached to this object.
-    
 
 
+    SpriteRenderer renderer;
 
 
 
@@ -26,10 +28,21 @@ public class Enemy : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
         //Get a component reference to this object's Rigidbody2D
         rb = GetComponent<Rigidbody>();
+        renderer = this.GetComponent<SpriteRenderer>();
     }
 
 
-   
+    private void Update()
+    {
+        if(targeted || selected)
+        {
+            renderer.color = Color.red;
+        }
+        else
+        {
+            renderer.color = Color.white;
+        }
+    }
 
 
 
@@ -47,5 +60,14 @@ public class Enemy : MonoBehaviour
     internal void Kill()
     {
         throw new NotImplementedException();
+    }
+
+    public void Targeted(bool isTargeted)
+    {
+        targeted = isTargeted;
+    }
+    public void Selected(bool isSelected)
+    {
+        selected = isSelected;
     }
 }

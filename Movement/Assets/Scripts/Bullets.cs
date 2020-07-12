@@ -20,8 +20,9 @@ public class Bullets : MonoBehaviour
 
 
     BulletType[] chamber = new BulletType[6];
-    BulletType[] bulletsShot = new BulletType[6];
-
+    BulletType[] bulletsToShoot = new BulletType[6];
+    GameObject[] enemiesToShoot = new GameObject[6];
+    int bulletsShot=0;
 
     void ReloadChamber()
     {
@@ -33,5 +34,24 @@ public class Bullets : MonoBehaviour
             chamber[count] = (BulletType)randBulletType;
         }
 
+    }
+
+    public void Shoot(GameObject enemyShot)
+    {
+        if(bulletsShot < chamber.Length)
+        {
+            bulletsToShoot[bulletsShot] = chamber[bulletsShot];
+            enemiesToShoot[bulletsShot++] = enemyShot;
+        }
+        
+    }
+
+    public BulletType[] GetBulletsToShoot()
+    {
+        return bulletsToShoot;
+    }
+    public GameObject[] GetSelectedEnemies()
+    {
+        return enemiesToShoot;
     }
 }
