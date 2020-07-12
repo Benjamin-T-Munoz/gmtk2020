@@ -29,6 +29,11 @@ public class Player : MonoBehaviour
                 target = hit.transform.gameObject.GetComponent<Enemy>();
                 target.Targeted(true);
                 Debug.Log("Target Acquired!");
+                if (Input.GetMouseButtonDown(0) && !hit.transform.GetComponent<Enemy>().selected)
+                {
+                    Debug.Log("BANG BANG MUTHAFUKA");
+
+                }
             }
             else
             {
@@ -38,13 +43,6 @@ public class Player : MonoBehaviour
                     Debug.Log("Target Lost!");
                 }
                 
-            }
-            if(Input.GetMouseButtonDown(0))
-            {
-                if(hit.transform.tag == "Enemy")
-                {
-                    Debug.Log("BANG BANG MUTHAFUKA");
-                }
             }
         }
     }

@@ -20,8 +20,9 @@ public class Bullets : MonoBehaviour
 
 
     BulletType[] chamber = new BulletType[6];
-    BulletType[] bulletsShot = new BulletType[6];
-
+    BulletType[] bulletsToShoot = new BulletType[6];
+    GameObject[] enemiesToShoot = new GameObject[6];
+    int bulletsShot=0;
 
     void ReloadChamber()
     {
@@ -32,6 +33,15 @@ public class Bullets : MonoBehaviour
             int randBulletType = UnityEngine.Random.Range(0, Enum.GetNames(typeof(BulletType)).Length);
             chamber[count] = (BulletType)randBulletType;
         }
+
+    }
+
+    public BulletType[] GetBulletsToShoot()
+    {
+        return bulletsToShoot;
+    }
+    public Enemy GetSelectedEnemies()
+    {
 
     }
 }

@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
 
     public bool activeThreat=false;
     bool targeted = false;
+    public bool selected = false;
 
     private BoxCollider boxCollider;         //The BoxCollider2D component attached to this object.
     private Rigidbody rb;                //The Rigidbody2D component attached to this object.
@@ -61,8 +62,12 @@ public class Enemy : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    public void Targeted(bool active)
+    public void Targeted(bool isTargeted)
     {
-        targeted = active;
+        targeted = isTargeted;
+    }
+    public void Selected(bool isSelected)
+    {
+        selected = isSelected;
     }
 }
