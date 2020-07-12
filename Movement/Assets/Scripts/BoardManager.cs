@@ -282,7 +282,9 @@ public class BoardManager : MonoBehaviour
                     explosionPoints[2] = new Vector3(hitposition.x + 1, 0.0f, hitposition.z +1);//top right corner
 
                     explosionPoints[3] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z);//center left 
+
                     explosionPoints[4] = new Vector3(hitposition.x, 0.0f, hitposition.z);//center
+
                     explosionPoints[5] = new Vector3(hitposition.x +1 , 0.0f, hitposition.z);//center right 
                    
                     explosionPoints[6] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z - 1);//bottom left corner
@@ -326,7 +328,7 @@ public class BoardManager : MonoBehaviour
 
                     Vector3[] ricochetPoints = new Vector3[8];
 
-
+                    ThreatKilled(targets[i]);
 
                     ricochetPoints[0] = new Vector3(hitposition.x - 1, 0.0f, hitposition.z + 1);//top left corner
                     ricochetPoints[1] = new Vector3(hitposition.x, 0.0f, hitposition.z + 1);//top center corner
