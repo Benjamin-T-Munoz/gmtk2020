@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     GameObject gameObject;
     public int index { get; set; }
     public Vector3 currentPosition { get; set; }
-
+    public Vector3 deathPosition { get; set; }
 
     public bool activeThreat=false;
     bool targeted = false;
@@ -31,6 +31,10 @@ public class Enemy : MonoBehaviour
         renderer = this.GetComponent<SpriteRenderer>();
     }
 
+    internal void RespawnAt(Vector3 spawnlocation)
+    {
+        currentPosition = spawnlocation;
+    }
 
     private void Update()
     {
@@ -44,22 +48,16 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
-
-    public void Move()
-    {
-       
-
-    }
-
-    public void Die()
-    {
-
-    }
-
     internal void Kill()
     {
-        throw new NotImplementedException();
+        gameObject.SetActive(false);
+
+        currentPosition = Vector3.zero;
+
+        activeThreat = false;
+        targeted = false;
+        selected = false;
+        gameObject.transform.position = deathPosition;
     }
 
     public void Targeted(bool isTargeted)
