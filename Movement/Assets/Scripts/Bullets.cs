@@ -36,12 +36,22 @@ public class Bullets : MonoBehaviour
 
     }
 
+    public void Shoot(GameObject enemyShot)
+    {
+        if(bulletsShot < chamber.Length)
+        {
+            bulletsToShoot[bulletsShot] = chamber[bulletsShot];
+            enemiesToShoot[bulletsShot++] = enemyShot;
+        }
+        
+    }
+
     public BulletType[] GetBulletsToShoot()
     {
         return bulletsToShoot;
     }
-    public Enemy GetSelectedEnemies()
+    public GameObject[] GetSelectedEnemies()
     {
-
+        return enemiesToShoot;
     }
 }

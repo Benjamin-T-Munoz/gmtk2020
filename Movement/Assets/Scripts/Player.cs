@@ -7,11 +7,12 @@ public class Player : MonoBehaviour
 
     Ray ray;
     Enemy target = null;
+    Bullets playerGun;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerGun = this.GetComponent<Bullets>();
     }
 
     // Update is called once per frame
@@ -25,14 +26,15 @@ public class Player : MonoBehaviour
         {
             if (hit.transform.tag == "Enemy")
             {
-                Debug.Log("Targeting!");
+                //Debug.Log("Targeting!");
                 target = hit.transform.gameObject.GetComponent<Enemy>();
                 target.Targeted(true);
-                Debug.Log("Target Acquired!");
+                //Debug.Log("Target Acquired!");
                 if (Input.GetMouseButtonDown(0) && !hit.transform.GetComponent<Enemy>().selected)
                 {
                     Debug.Log("BANG BANG MUTHAFUKA");
-
+                    playerGun.Shoot(hit.transform.gameObject);
+                    hit.transform.GetComponent<Enemy>().selected = true;
                 }
             }
             else
@@ -40,7 +42,7 @@ public class Player : MonoBehaviour
                 if(target != null)
                 {
                     target.Targeted(false);
-                    Debug.Log("Target Lost!");
+                    //Debug.Log("Target Lost!");
                 }
                 
             }

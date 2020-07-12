@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if(targeted)
+        if(targeted || selected)
         {
             renderer.color = Color.red;
         }
